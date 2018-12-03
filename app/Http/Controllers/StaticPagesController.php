@@ -9,6 +9,7 @@ class StaticPagesController extends Controller
     // 主页
     public function home() 
     {
+        print_r(parse_url(getenv("DATABASE_URL")));
     	return view('static_pages/home');
     }
     // 帮助页
