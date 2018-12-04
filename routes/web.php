@@ -33,3 +33,10 @@ Route::resource('users','UsersController');
 // Route::get('/users/{user}/edit','UsersController@edit')->name('users.edit');
 // Route::patch('/users/{user}','UserController@update')->name('users.update');
 // Route::delete('/user/{user}','UsersController@destroy')->name('user.destroy');
+
+// 用户登录页面
+Route::get('login','SessionsController@create')->name('login');
+// 用户登录操作
+Route::post('login','SessionsController@store')->name('login');
+// 用户退出登录
+Route::delete('logout','SessionsController@destroy')->name('logout');
