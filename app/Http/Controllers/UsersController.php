@@ -12,6 +12,10 @@ use Auth;
 
 class UsersController extends Controller
 {
+    public function test()
+    {
+        return view('users.test');
+    }
     //  用户构造器
     public function __construct()
     {
@@ -40,7 +44,11 @@ class UsersController extends Controller
     // 单个用户显示页面
     public function show(User $user)
     {
-    	return view('users.show',compact('user'));
+        // 获取用户微博数据
+        $statuses = $user->statuses()
+                    ->orderBy('created_at','desc')
+                    ->paginate(30);
+    	return view('users.show',compact('user','statuses'));
     }
 
     // 新增用户
@@ -96,7 +104,7 @@ class UsersController extends Controller
     // 删除用户
     public function destroy(User $user)
     {   
-        //$this->authorize('destroy',$user);
+        $this->authorize('destroy',$user);
         $user->delete();
         session()->flash('success','成功删除用户');
         return back();

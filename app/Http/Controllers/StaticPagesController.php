@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+use App\Http\Controllers\controller;
+use App\Models\status;
+use Auth;
+
 class StaticPagesController extends Controller
 {
     // 主页
     public function home() 
     {
-        print_r(parse_url(getenv("DATABASE_URL")));
-    	return view('static_pages/home');
+        //print_r(parse_url(getenv("DATABASE_URL")));
+        
+        // 获取当前用户的微博数据
+        $feed_items = [];
+        if (Auth::check()) {
+            $feed_items = Auth::user()->feed()->paginate(30);
+        }
+    	return view('static_pages/home',compact('feed_items'));
     }
     // 帮助页
     public function help()
