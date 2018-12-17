@@ -138,4 +138,18 @@ class UsersController extends Controller
         session()->flash('success','恭喜你，激活成功！');
         return redirect()->route('users.show',$user);
     }
+    // 当前用户关注的人的列表
+    public function followings(User $user)
+    {
+        $users = $user->followings()->paginate(30);
+        $title = "关注的人";
+        return view('users.show_follow',compact('users','title'));
+    }
+    // 当前用户的粉丝列表
+    public function followers($value='')
+    {
+        $users = $user->followers()->paginate(30);
+        $title = "粉丝";
+        return view('users.show_follow',compact('users','title'));
+    }
 }
